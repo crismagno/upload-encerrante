@@ -58,7 +58,7 @@
                     <div class="integracoes" v-if="integracoes">
                         <h4>Integrações</h4>
                         <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between"  v-for="(valor, chave, key4) in jornada.totalQtd" :key="key4">
+                            <li class="list-group-item d-flex justify-content-between"  v-for="(valor, chave, key4) in jornada.integracoes" :key="key4">
                             <span> {{chave}}:</span>  <span>{{valor}}</span>
                             </li>
                         </ul>

@@ -5,6 +5,10 @@ import 'font-awesome/css/font-awesome.css'
 import jquery from 'jquery'
 window.$ = jquery
 
+import VueGoogleCharts from 'vue-google-charts'
+ 
+Vue.use(VueGoogleCharts)
+
 import './config/msgs'
 
 import router from './config/router'

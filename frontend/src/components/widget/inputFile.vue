@@ -17,6 +17,8 @@
 
 <script>
 import axios from "axios";
+
+import { URL_ROOT } from "@/config/global";
 export default {
     data () {
 		return {
@@ -41,12 +43,15 @@ export default {
         onUpload() {
             const data = new FormData()
             data.append('upload', this.fileSelected)
-            axios.post('http://localhost:3003/upload', data)
+            axios.post(`${URL_ROOT}/upload`, data)
                 .then(res => {
                     this.$toasted.global.defaultSuccess({msg: res.data})
                     this.nameFile = 'Ex.: EncerranteXXXX-XXXX.rtf'
                 })
-                .catch(e => this.$toasted.global.defaultError({msg: e.response.data}))
+                .catch(e => {
+                    this.$toasted.global.defaultError({msg: e.response.data})
+                    // console.log(e.response)
+                })
             
         },
     }

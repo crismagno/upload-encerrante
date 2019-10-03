@@ -32,7 +32,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(encerrante, e) in encerrantes" :key="e" :class="{'markedDone' : encerrante.done}">
+                        <tr v-for="(encerrante, e) in encerrantes" :key="e" :class="{'markedDone alert-danger' : encerrante.done}">
                             <td >{{encerrante.name.split('.')[0]}}</td>
                             <td >{{encerrante.INICIO_JORNADAS.JORNADAS }}</td>
                             <td >{{encerrante.INICIO_JORNADAS.HORARIO}} - {{encerrante.INICIO_JORNADAS.DATA}} </td>
@@ -115,7 +115,7 @@ export default {
 
         markAsDone(encerrante) {
             let done = encerrante.done ? false : true
-            axios.put(`${URL_ROOT}/upload/done/${encerrante._id}`, {done: done})
+            axios.put(`${URL_ROOT}/upload/done/${encerrante._id}`, {done})
                 .then(res => {
                         if (done) {
                             this.$toasted.global.default({msg: 'Encerrante Desabilitado.'})
@@ -152,6 +152,10 @@ export default {
 
 <style>
 
+#encerrantes {
+    margin: 10px;
+}
+
 .fade-enter {
     opacity: 0;
 }
@@ -170,7 +174,7 @@ export default {
 
 .div-encerrantes {
     /* height: 380px; */
-    max-height: 450px;
+    max-height: 400px;
     overflow-x: hidden;
 }
 
@@ -188,5 +192,21 @@ export default {
     border-bottom: none;
     border-radius: 2px;
     padding: 2px;
+}
+
+/*=====animações=====*/
+#encerrantes {
+    animation: fade 2s;
+}
+
+@keyframes fade {
+    from { 
+        opacity: 0;
+        transform: translateX(0);
+        }
+    to {
+        opacity: 1;
+        transform: translateX(90);
+        }
 }
 </style>

@@ -5,12 +5,10 @@
 </template>
 
 <script>
-
-import axios from "axios";
 export default {
     name: 'Conteudo',
     created() {
-        this.$router.push({ path: "Encerrantes" });
+        this.$router.push({ path: "Dashboard" });
     }
 }
 </script>
@@ -19,7 +17,6 @@ export default {
 
 #content {
     grid-area: content;
-    padding: 10px;
 }
 
 </style>

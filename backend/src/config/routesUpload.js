@@ -23,8 +23,9 @@ routes.get('/upload', async(req, res, next) => {
 routes.post('/upload', async(req, res) => {
     
     upload(req, res, err => {
-
+        // console.log(req.file)
         if (err ) {
+            // console.log(err)
             return res.status(400).send(err)
         } else if (!req.file) {
             return res.status(400).send('Nenhum arquivo enviado.')
@@ -59,11 +60,8 @@ routes.post('/upload', async(req, res) => {
                     res.status(400).send('Encerrante já cadastrado.')
                 }
             }
-        })
-
-         
+        }) 
     })
-    
 })
 
 routes.put('/upload/done/:id', async(req, res, next) => {
