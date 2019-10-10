@@ -15,7 +15,7 @@ const EncerranteSchema = new mongoose.Schema({
         {
             type: Object,
             required: true 
-        } ,
+        }
     ],
 
     RESUMO_JORNADAS: {

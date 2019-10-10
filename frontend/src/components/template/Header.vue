@@ -1,12 +1,18 @@
 <template>
-    <div id="header">
+    <div id="header" >
         <a class="barras" href @click.prevent="desabilitarMenu" >
             <i class="fa fa-angle-left" :class="icon"></i>
         </a>
         <h3>Encerrantes</h3>
-        <a class="barras"  href @click.prevent="">
-            <i class="fa fa-angle-down"></i>
+        <a class="barras"  href @click.prevent="showHideDiv()" @mouseenter="showHideDiv()">
+            <i class="fa fa-sign-out"></i>
         </a>
+        <!-- abaixo a div sair de position: absolute -->
+        <div class="config-sair"  v-if="showSair" @mouseleave="showHideDiv()">
+            <a style="width: 100%" class="barras"  href @click.prevent="sair()">
+                <span style="font-size: 17px">sair</span>
+            </a>
+        </div>
     </div>
 </template>
 
@@ -14,14 +20,27 @@
 
 export default {
     name: 'Header',
+    data() {
+        return {
+            showSair: false,
+        }
+    },
     computed: {
         icon() {
             return this.$store.state.isMenuVisible ? 'fa fa-angle-down' : 'fa fa-angle-left'
         }
     },
     methods: {
+        showHideDiv(){
+            this.showSair = this.showSair ? false : true
+        },
+
         desabilitarMenu() {
             this.$store.commit('visibleMenu')
+        },
+
+        sair() {
+            this.$router.push({path: '/'})
         }
     }
 }
@@ -54,6 +73,32 @@ export default {
     color: #fff;
     text-decoration: none;
     background-color: #0003;
+}
+
+.config-sair {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    background-color: #0004;
+    top: 50px;
+    right: 0px;
+    width: 200px;
+    height: 40px;
+}
+
+/*====animations====*/
+
+.config-sair {
+    animation: showConfigSair 1s ease;
+}
+
+@keyframes showConfigSair {
+    from {
+        opacity: 0;
+    } 
+    to {
+        opacity: 1;
+    }
 }
 
 </style>

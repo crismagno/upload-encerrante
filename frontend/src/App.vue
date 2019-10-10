@@ -1,10 +1,11 @@
 <template>
-	<div id="app" :class="{'hide-menu' : isMenuVisible}">
-		<Header />
-		<Menu :isMenuVisible="isMenuVisible"/>
+	<div id="app" class="" 
+		:class="[isMenuVisible ? 'hide-menu': 'app', {templateInvisible: !templateInvisible}]">
+		<Header v-if="templateInvisible"/>
+		<Menu :isMenuVisible="isMenuVisible" v-if="templateInvisible"/>
 		<Content />
-		<Footer />
-        <InputFile />
+		<Footer v-if="templateInvisible"/>
+        <InputFile v-if="templateInvisible"/>
 	</div>
 </template>
 
@@ -20,7 +21,7 @@ import InputFile from "@/components/widget/inputFile";
 export default {
 	name: 'App',
 	components: { Header, Menu, Content, Footer, InputFile },
-    computed: mapState(['isMenuVisible']),
+    computed: mapState(['isMenuVisible', 'templateInvisible']),
 }
 
 </script>
@@ -35,7 +36,7 @@ body {
 	margin: 0px;
 }
 
-#app {
+.app {
 	display: grid;
 	grid-template-columns: 200px 1fr;
 	grid-template-rows: 50px 1fr 40px;
@@ -44,16 +45,27 @@ body {
 		'menu content'
 		'menu footer';
 	height: 100vh;
+	
 }
-#app.hide-menu {
+.hide-menu {
 	display: grid;
-	grid-template-columns: 200px 1fr;
+	grid-template-columns: 50px 1fr;
 	grid-template-rows: 50px 1fr 40px;
 	grid-template-areas: 
-		'header header'
-		'content content'
-		'footer footer';
+		'header header '
+		'menu content '
+		'menu footer ';
 	height: 100vh;
 }
+
+.templateInvisible {
+	display: grid;
+	grid-template-columns:  1fr;
+	grid-template-rows: 1fr;
+	grid-template-areas: 'content';
+	height: 100vh;
+}
+
+/*=====animações======*/
 
 </style>

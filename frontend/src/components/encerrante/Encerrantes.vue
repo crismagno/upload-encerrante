@@ -54,17 +54,15 @@
                 </table>
             </div>
             <!-- <div class="col-md-1"></div> -->
-            <transition name="fade">
-                <div class="show-encerrante col-md-4 d-flex flex-column justify-content-start" v-if="show_encerrante">
-                    <div class="div_clear_show d-flex justify-content-between align-items-center ">
-                        <h5>{{encerrante_side.name.replace('.rtf', '')}}</h5>
-                        <button  class="btn btn-secondary float-right btn-sm" @click="show_encerrante = false">
-                            <i class="fa fa-times"></i>
-                        </button>
-                    </div>
-                    <ShowEncerrante :encerrante="encerrante_side" />
+            <div class="show-encerrante col-md-4 d-flex flex-column justify-content-start" v-if="show_encerrante">
+                <div class="div_clear_show d-flex justify-content-between align-items-center ">
+                    <h5>{{encerrante_side.name.replace('.rtf', '')}}</h5>
+                    <button  class="btn btn-secondary float-right btn-sm" @click="show_encerrante = false">
+                        <i class="fa fa-times"></i>
+                    </button>
                 </div>
-            </transition>
+                <ShowEncerrante :encerrante="encerrante_side" />
+            </div>
         </div>
         
     </div>
@@ -72,7 +70,7 @@
 
 <script>
 import axios from "axios";
-import { URL_ROOT } from '@/config/global'
+import { URL_ROOT, userKey } from '@/config/global'
 
 import PageTitle from "../template/Pagetitle";
 import ShowEncerrante from "./ShowEncerrante";
@@ -88,10 +86,6 @@ export default {
         }
     },
 
-    computed: {
-
-    },
-
     methods: {
         
         getEncerrantes() {
@@ -100,7 +94,7 @@ export default {
                 .then(res => {
                     this.encerrantes = res.data
                 })
-                .catch(e => this.$toasted.global.defaultError({msg: e.response}))
+                .catch(e => this.$toasted.global.defaultError({msg: e.response.data}))
         },
 
         showEncerrante(encerrante) {
@@ -124,27 +118,26 @@ export default {
                         }
                     this.getEncerrantes()
                 })
-                .catch(e => this.$toasted.global.defaultError({msg: 'Erro ao Desabilitar.'}))
+                .catch(e => this.$toasted.global.defaultError({msg: e.response.data}))
 
         },
 
         DeleteEncerrante(encerrante) {
-            axios.delete(`${URL_ROOT}/upload/${encerrante._id}`)
+            axios.delete(`${URL_ROOT}/upload/${encerrante._id}/${encerrante.name}`)
                 .then(res => {
                     this.$toasted.global.defaultSuccess({msg: res.data})
                     this.getEncerrantes()
+                    this.show_encerrante = false
                 })
-                .catch(e => this.$toasted.global.defaultError({msg: e.response}))
+                .catch(e => this.$toasted.global.defaultError({msg: e.response.data}))
         }
 
     },
 
     created(){
+        this.$store.commit('setUser', JSON.parse(localStorage.getItem(userKey)))
         this.getEncerrantes()
-        // setInterval(() => {
-        //     this.getEncerrantes()
-        //     console.log('bla')
-        // }, 5000)
+        document.title = 'Encerrantes'
     },
 
 }
@@ -152,24 +145,13 @@ export default {
 
 <style>
 
-#encerrantes {
-    margin: 10px;
-}
-
-.fade-enter {
-    opacity: 0;
-}
-
-.fade-enter-active {
-    transition: opacity 1s;
-}
-
 .row {
     max-width: 100%; 
 }
 
 #encerrantes {
     grid-area: content;
+    margin: 10px;
 }
 
 .div-encerrantes {
@@ -196,17 +178,45 @@ export default {
 
 /*=====animações=====*/
 #encerrantes {
-    animation: fade 2s;
+    animation: upTable 0.5s ease;
 }
 
-@keyframes fade {
+.table{
+    animation: showTable 2.3s ease;
+}
+
+@keyframes upTable {
     from { 
         opacity: 0;
-        transform: translateX(0);
+        transform: translateY(100px);
         }
     to {
         opacity: 1;
-        transform: translateX(90);
+        transform: translateX(0px);
         }
 }
+@keyframes showTable {
+    from { 
+        opacity: 0;
+        }
+    to {
+        opacity: 1;
+        }
+}
+
+.show-encerrante {
+    animation: encSideEnter 0.5s;
+}
+
+@keyframes encSideEnter {
+    from { 
+        opacity: 0;
+        transform: translateX(100px);
+        }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+        }
+}
+
 </style>

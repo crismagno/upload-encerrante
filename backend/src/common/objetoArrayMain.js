@@ -1,7 +1,12 @@
 const fs = require('fs')
 const readline = require('readline')
+// 'C:/Users/crist/Documents/ENCERRANTES/2016/10 Outubro/10.10/Encerrante112717-101016' --esse ta certo--
+// 'C:/Users/crist/Documents/ENCERRANTES/2016/06 Junho/07.06/Encerrante085149-070616.rtf'  --esse tbm ta certo--
+// 'C:/Users/crist/Documents/ENCERRANTES/2016/05 Maio/05.05/Encerrante044446-050516.rtf'
 
-const readable = fs.createReadStream('C:/Users/crist/Downloads/Encerrante093022-090919.rtf')
+// const readable = fs.createReadStream('C:/Users/crist/Documents/ENCERRANTES/2016/10 Outubro/10.10/Encerrante112717-101016.rtf')
+const readable = fs.createReadStream('C:/Users/crist/Documents/ENCERRANTES/2016/06 Junho/07.06/Encerrante085149-070616.rtf')
+// const readable = fs.createReadStream('C:/Users/crist/Documents/ENCERRANTES/2016/10 Outubro/10.10/Encerrante112717-101016.rtf')
 
 const rl = readline.createInterface({
     input: readable,
@@ -20,11 +25,25 @@ rl.on('line', (line) => {
     }
 
     linha = linha.filter(l => l )
-    
-    if (linha.length > 0) {
+
+    if (linha[0] == 'Integracao') {
+        linhas.push('TOTAL: R$ 0,00 =')
+        linhas.push('Integracoes:')
+        linhas.push(`TOTAL: ${linha[1]}`)
+    } else if(linha.length > 0) {
         linhas.push(linha.join(' '))
     }
 })
+
+let objInicio = {}
+
+let objResumo = {
+    TipoQuantidadeValor: [],
+    integracoes: {},
+    valorTotal: null
+}
+
+let arrayJornadas = []
 
 rl.on('close', () => {
 
@@ -44,18 +63,9 @@ rl.on('close', () => {
     linhas = linhas.map(l => l.replace(/,/g, '.'))
         .map(l => l.replace(/=/g, ''))
         .filter(l => l)
-                
-    let objInicio = {}
-    
-    let objResumo = {
-        TipoQuantidadeValor: [],
-        integracoes: {},
-        valorTotal: null
-    }
 
-    let arrayJornadas = []
 
-    //esse metodo de foreach vai ser para as jornadas
+    // //esse metodo de foreach vai ser para as jornadas
     linhas.forEach((ls, i) =>{
         if (i > 0 && i < linhas.length - 2) {
             let JI = ls.split('Integracoes:').filter(l => l)
@@ -85,6 +95,7 @@ rl.on('close', () => {
                 if (ij < 7) {
                     if (ij == 0) {
                         obj.configJornada['jornada'] = el[0]
+                        // console.log(el)
                     } else if (ij > 0 && ij < 5 ) {
                         obj.configJornada[el[0]] = el[1]
                     } else if (ij > 4 && ij < 7) { 
@@ -102,7 +113,7 @@ rl.on('close', () => {
                             obj.totalQtd[`${el[0]}_${el[1]}`] = el[el.length - 1]
                         } else {
                             obj.totalQtd[el[0]] = el[el.length - 1]
-                        }                    
+                        }   
                     }
                 } 
                 
@@ -139,6 +150,7 @@ rl.on('close', () => {
                         }
                     }   
                 }
+                
             })
                     
             //inserindo as integracoes de cada jornada
@@ -161,7 +173,7 @@ rl.on('close', () => {
     linhas.forEach((ls, i) => {
         if (i == 0) {
             ls = ls.split('|').filter(l => l)
-           
+        
             ls.forEach((e, i) => {
                 e = e.split(' ')
                 if (i == 0) {
@@ -174,30 +186,34 @@ rl.on('close', () => {
             })
         }
 
-        if (i == linhas.length - 2) {
+        if (i == linhas.length - 2) {//parte de resumo
             l = ls.split('Integracoes:').filter(l => l).map(l => l.replace(/:/g, ''))
             linha0 = l[0].split('|').filter(l => l)
             linha0.shift()
             linha0.shift()
 
-            linha0.forEach((ls, i0) => {
+            linha0.forEach((ls, i0) => {//resumo tipo qtd valor
                 let el = ls.split(' ')
-                if (el.length > 4) {
-                    objResumo.TipoQuantidadeValor[i0] = {
-                        tipo: `${el[0].replace('.', '')}_${el[1]}`,
-                        qtd: el[el.length - 3],
-                        valor: el[el.length - 1]
-                     }
+                if (el[0] == 'TOTAL') {
+                    return
                 } else {
-                    objResumo.TipoQuantidadeValor[i0] = {
-                        tipo:el[0] ,
-                        qtd: el[el.length - 3],
-                        valor: el[el.length - 1]
-                     } 
+                    if (el.length > 4) {
+                        objResumo.TipoQuantidadeValor[i0] = {
+                            tipo: `${el[0].replace('.', '')}_${el[1]}`,
+                            qtd: el[el.length - 3],
+                            valor: el[el.length - 1]
+                            }
+                    } else {
+                        objResumo.TipoQuantidadeValor[i0] = {
+                            tipo:el[0] ,
+                            qtd: el[el.length - 3],
+                            valor: el[el.length - 1]
+                        } 
+                    }
                 }
             })
 
-            linha1 = l[1].split('|').filter(l => l).map(l => l.replace('.', ''))
+            linha1 = l[1].split('|').filter(l => l).map(l => l.replace('.', ''))//resumo integrações
             linha1.forEach(l1 => {
                 let l = l1.split(' ')
                 if (l.length > 2) {
@@ -208,19 +224,30 @@ rl.on('close', () => {
             })
         }
 
-        if (i == linhas.length - 1) {
+        if (i == linhas.length - 1) {//resumo valorTotal
             l = ls.replace(/\|/g, '').split(' ')
             objResumo.valorTotal = l[l.length - 1]
         }
     }); //fim do forEach que trabalha com o inicio e o resumo
     
 
+    console.log('==---===---===---===---===-' )
+    console.log('INICIO' )
+    console.log('---------------------------' )
     console.log(objInicio )
+    console.log('')
     console.log('===========================' )
-    console.log(arrayJornadas )
+    console.log('JORNADAS' )
+    console.log('---------------------------' )
+    console.log(arrayJornadas[0] )
+    console.log('' )
     console.log('===========================' )
+    console.log('RESUMO' )
+    console.log('---------------------------' )
     console.log(objResumo )
 
     // console.log(linhas)
     // console.log(linhas.length)
 })
+
+// return { objInicio, objResumo, arrayJornadas }

@@ -4,7 +4,7 @@
             <i :class="icon"></i>
             {{title}}
         </h3>
-        <h5>{{sub}}</h5>
+        <h6>{{sub}}</h6>
         <hr>
     </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
-    <div class="main-input-upload">
+    <div class="main-input-upload d-flex">
         <button :style="borderButton" class="btn btn-info" @click=" mostrar = !mostrar">
             <i  :class="{'fa fa-angle-left' : mostrar, 'fa fa-angle-right' : !mostrar}"></i>
         </button>
-        <transition name="fade">
+        <transition name="fadeInput">
             <div class="upload" v-if="mostrar">
                 <label for="file" class="text-file">{{nameFile}}</label>
                 <input type="file" name="file" id="file" class="inputfile" @change="onFileSelected">
@@ -37,7 +37,11 @@ export default {
     methods: {
         onFileSelected(event) {
             this.fileSelected = event.target.files[0]
-            this.nameFile = this.fileSelected.name
+            if (!this.fileSelected) {
+				this.nameFile = 'Ex.: EncerranteXXXX-XXXX.rtf'
+            } else {
+				this.nameFile = this.fileSelected.name
+			}
         },
 
         onUpload() {
@@ -47,12 +51,11 @@ export default {
                 .then(res => {
                     this.$toasted.global.defaultSuccess({msg: res.data})
                     this.nameFile = 'Ex.: EncerranteXXXX-XXXX.rtf'
+                    this.fileSelected = null
                 })
                 .catch(e => {
                     this.$toasted.global.defaultError({msg: e.response.data})
-                    // console.log(e.response)
                 })
-            
         },
     }
 }
@@ -60,30 +63,12 @@ export default {
 
 <style >
 
-.fade-enter {
-    transition: opacity 0;
-} 
-
-.fade-enter-active {
-    transition: opacity 2s ease;
-}
-
-.fade-leave-active {
-    transition: opacity 1s;
-}
-
-.fade-leave-to {
-    opacity: 0;
-}
-
 .main-input-upload {
     position: fixed;
-    display: flex;
     bottom: 20px;
 }
 
 .upload {
-    /* position: fixed; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -102,30 +87,50 @@ export default {
 
 .inputfile {
     padding: 10px;
-    width: 100%;
+    width: 80%;
 	height: 100%;
 	opacity: 0;
 	position: absolute;
 	z-index: -1;
-    /* margin: auto; */
 }
 
 label {
     width: 100%;
 }
 
-/* .inputfile, label {
-    color: white;
-    display: inline-block;
-} */
-
 .inputfile, label {
 	cursor: pointer; /* "hand" cursor */
 }
 
 .btn-upload {
-    /* border-radius: 5px; */
     height: 100%;
+}
+
+/*====== animações =======*/
+
+.fadeInput-enter-active {
+    animation: fadeInputEnter 1s ease;
+}
+
+.fadeInput-leave-to {
+    animation: fadeInputOut 1s ease;
+}
+
+@keyframes fadeInputEnter {
+	from {
+		opacity: 0;
+	} 
+	to {
+		opacity: 1;
+	}
+}
+@keyframes fadeInputOut {
+	from {
+		opacity: 1;
+	} 
+	to {
+		opacity: 0;
+	}
 }
 
 </style>

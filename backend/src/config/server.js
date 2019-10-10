@@ -6,6 +6,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(require('./cors'))
 
-app.use(require('./routesUpload'))
+app.use(require('../routes/routesAuth'))
+app.use(require('../routes/routesUpload'))
 
 app.listen(port, () => console.log(`Backend rodando na porta ${port}`))

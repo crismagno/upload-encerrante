@@ -52,7 +52,7 @@ export default {
     /* height: 150px; */
     box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
     border-radius:2px;
-    margin: 10px 0px;
+    margin: 10px 0px 5px 0px;
     color: #fff;
     
 }
