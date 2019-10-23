@@ -46,10 +46,7 @@ export default {
 
 .boxValue {
     display: flex;
-    /* background-color: rgb(103, 66, 190); */
-    
-    /* width: 240px; */
-    /* height: 150px; */
+
     box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
     border-radius:2px;
     margin: 10px 0px 5px 0px;

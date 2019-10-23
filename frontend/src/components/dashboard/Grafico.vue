@@ -1,12 +1,11 @@
 <template>
-    <div class="grafico">
+    <div :style="{borderLeft: border}" class="grafico">
        <GChart
             :settings="{ packages: ['corechart', 'table', 'map'] }"
             :type="type"
             :data="chartData"
             :options="options"
         />
-        <!-- <hr> -->
     </div>
 </template>
 
@@ -15,17 +14,19 @@
 import { GChart } from 'vue-google-charts'
 export default {
     props: {
-        type: '',
+        type: String,
         chartData: Array,
-        options: {}
+        options: Object,
+        border: String
     },
     components: { GChart },
 }
 </script>
 
-<style>
+<style scoped>
 
 .grafico {
+    /* border-radius: 3px; */
     overflow-y: hidden;
 }
 

@@ -6,9 +6,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        user: null,
-        templateInvisible: false,
-        isMenuVisible: false,
+        user: null, //guarda os dados do usuário
+        templateInvisible: false, //habilita ou desabilita o template 
+        isMenuVisible: false, // habilitar ou desabilitar o menu
+        titleHeader: '', // insere o titulo do header do template
+        nameHeaderModal: '', //insere o header do modal do dashboard
+        chartEscolha: 'Total'
     },
 
     mutations: {
@@ -20,12 +23,20 @@ export default new Vuex.Store({
                 delete axios.defaults.headers.common['Authorization']
             }
         },
-        visibleMenu(state, isMenuVisible){
-            state.isMenuVisible = !state.isMenuVisible
+        toggleMenu(state, isVisible){
+            if (isVisible === undefined) {
+                state.isMenuVisible = !state.isMenuVisible
+            } else {
+                state.isMenuVisible = isVisible
+            }
         },
 
         showTemplate(state, show) {
             state.templateInvisible = show
+        },
+
+        changeTitle(state, title) {
+            state.titleHeader = title
         }
     }
 })

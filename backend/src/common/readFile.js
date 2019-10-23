@@ -201,7 +201,7 @@ module.exports = (file) => {
             }); //fim do forEach que trabalha com o inicio e o resumo
         } 
         
-        else {//esse é para os encerrantes mais novos
+        else {//esse é para os encerrantes mais novos de 2017 para cima
     
     
             

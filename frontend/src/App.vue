@@ -27,13 +27,17 @@ export default {
 </script>
 
 <style>
+/* @import url('https://fonts.googleapis.com/css?family=Lato&display=swap'); */
+
 *{
+	/* font-family: 'Lato', sans-serif; */
     padding: 0px;
     margin: 0px;
 }
 
 body {
 	margin: 0px;
+	overflow-x: hidden;
 }
 
 .app {
@@ -65,7 +69,5 @@ body {
 	grid-template-areas: 'content';
 	height: 100vh;
 }
-
-/*=====animações======*/
 
 </style>

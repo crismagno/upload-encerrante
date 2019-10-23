@@ -10,6 +10,7 @@
                 </div>
 
                 <div class="modal-body" >
+                   
                 </div>
 
                 <div class="modal-footer d-flex justify-content-between" >
@@ -24,42 +25,10 @@
 <script>
 export default {
     props: {
-        
-    },
+        linhaOuColuna: String,
+        nameHeader: String,
+        resultadosModal: Object,
 
-    data () {
-        return {
-             
-        }
-    },
-
-    methods: {
-        pageJornada(page) {
-            if (page === 'config') {
-                this.config = true
-                this.tipo = false
-                this.total = false
-                this.integracoes = false
-            } 
-            if (page === 'tqv') {
-                this.config = false
-                this.tipo = true
-                this.total = false
-                this.integracoes = false
-            } 
-            if (page === 'total') {
-                this.config = false
-                this.tipo = false
-                this.total = true
-                this.integracoes = false
-            } 
-            if (page === 'integ') {
-                this.config = false
-                this.tipo = false
-                this.total = false
-                this.integracoes = true
-            } 
-        }
     },
 
 }

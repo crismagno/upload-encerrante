@@ -491,6 +491,7 @@ export default {
             }
         }, 5000)
         document.title = 'Dashboard'
+        this.$store.state.titleHeader = 'Dashboard'
     },
 
 }
@@ -499,7 +500,7 @@ export default {
 <style>
 .dashboard {
     padding: 10px;
-    background-color: #CCC3;
+    background-color: #FFF;
     height: 100%;
 }
 

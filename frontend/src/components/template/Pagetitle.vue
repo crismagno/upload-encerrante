@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    aname: 'PageTitle',
+    name: 'PageTitle',
     props: ['title', 'icon', 'sub' ]
 }
 </script>

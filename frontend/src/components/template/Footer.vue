@@ -1,12 +1,12 @@
 <template>
-    <div id="footer">
+    <footer id="footer">
         <span class="span-footer">Copyright&copy;<strong>Bem vindo!</strong> </span>
-    </div>
+    </footer>
 </template>
 
 <script>
 export default {
-    name: 'Rodape',
+    name: 'Footer',
 }
 </script>
 

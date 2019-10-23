@@ -1,9 +1,9 @@
 <template>
-    <div id="header" >
-        <a class="barras" href @click.prevent="desabilitarMenu" >
+    <header id="header" >
+        <a class="barras" href @click.prevent="toggleMenu()" >
             <i class="fa fa-angle-left" :class="icon"></i>
         </a>
-        <h3>Encerrantes</h3>
+        <h3>{{this.$store.state.titleHeader}}</h3>
         <a class="barras"  href @click.prevent="showHideDiv()" @mouseenter="showHideDiv()">
             <i class="fa fa-sign-out"></i>
         </a>
@@ -13,7 +13,7 @@
                 <span style="font-size: 17px">sair</span>
             </a>
         </div>
-    </div>
+    </header>
 </template>
 
 <script>
@@ -35,8 +35,8 @@ export default {
             this.showSair = this.showSair ? false : true
         },
 
-        desabilitarMenu() {
-            this.$store.commit('visibleMenu')
+        toggleMenu() {
+            this.$store.commit('toggleMenu')
         },
 
         sair() {
@@ -50,12 +50,12 @@ export default {
 
 #header {
     grid-area: header;
-    background-color: #546e7a;
+    /* background-color: #546e7a; */
+    background: linear-gradient(to left, #536976, #292e49);
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #fff;
-    /* padding: 0px 10px; */
 }
 
 .barras {
@@ -84,6 +84,7 @@ export default {
     right: 0px;
     width: 200px;
     height: 40px;
+    z-index: 2;
 }
 
 /*====animations====*/

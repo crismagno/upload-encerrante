@@ -1,5 +1,5 @@
 <template>
-    <div id="content">
+    <div id="content" >
         <router-view></router-view>
     </div>
 </template>
@@ -9,7 +9,7 @@ import axios from 'axios'
 import { URL_ROOT, userKey } from '@/config/global'
 
 export default {
-    name: 'Conteudo',
+    name: 'Content',
     methods: {
         async validateToken() {
             this.validatingToken = true;

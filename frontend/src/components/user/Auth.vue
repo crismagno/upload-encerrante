@@ -1,6 +1,6 @@
 <template>
     <div class="auth">
-        <div class="auth-box" :class="{formHide, formInvalid}">
+        <div class="auth-box" :class="{formHide, formInvalid, login : !showSignUp}" >
             <!-- <div class="auth-box-header">cabecalho do auth -->
                 <div class="auth-header d-flex justify-content-center">
                     <h2 style="color: #546e7a">{{showSignUp ? 'Cadastro' : 'Login'}}</h2>
@@ -139,6 +139,7 @@ export default {
 
         animacaoCubos() {
             const ulSquares = document.querySelector('ul.squares')
+            
 
             for (let i = 0; i < 11; i++) {
                 const li = document.createElement('li')
@@ -149,6 +150,7 @@ export default {
                 const delay = random(5, 0.1)
                 const duration = random(24, 12)
 
+                li.style.borderRadius = `${Math.floor(random(50, 0))}px`
                 li.style.width = `${size}px`
                 li.style.height = `${size}px`
                 li.style.bottom = `-${size}px`
@@ -185,7 +187,7 @@ export default {
     align-items: center;
     height: 100vh;
 
-    background: linear-gradient(to right, #29434e, #546e7a, #819ca9);
+    background: linear-gradient(to left, #536976, #292e49);
     overflow: hidden;
 }
 
@@ -227,12 +229,12 @@ export default {
 
 /*======= parte de animação do auth-login ========*/
 
-.auth-box {
+.login  {
     animation: sliderUpDown 1s ease;
 }
 
 .formHide {
-    animation: sliderUpDownHide 0.5s ease;
+    animation: sliderUpDownHide 1s ease;
 }
 
 .formInvalid {
@@ -255,8 +257,6 @@ export default {
     animation-fill-mode: backwards;
 }
 
-
-
 @keyframes sliderUpDown {
     from {
         opacity: 0;
@@ -269,11 +269,15 @@ export default {
 }
 
 @keyframes sliderUpDownHide {
-    from {
+    0% {
+        opacity: 1;
         transform: translateY(0);
     } 
-    to {
-        transform: translateY(100vh);
+    50% {
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(100vh) ;
     }
 }
 

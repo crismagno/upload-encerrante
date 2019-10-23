@@ -138,6 +138,7 @@ export default {
         this.$store.commit('setUser', JSON.parse(localStorage.getItem(userKey)))
         this.getEncerrantes()
         document.title = 'Encerrantes'
+        this.$store.state.titleHeader = 'Encerrantes'
     },
 
 }
@@ -181,10 +182,6 @@ export default {
     animation: upTable 0.5s ease;
 }
 
-.table{
-    animation: showTable 2.3s ease;
-}
-
 @keyframes upTable {
     from { 
         opacity: 0;
@@ -192,15 +189,7 @@ export default {
         }
     to {
         opacity: 1;
-        transform: translateX(0px);
-        }
-}
-@keyframes showTable {
-    from { 
-        opacity: 0;
-        }
-    to {
-        opacity: 1;
+        transform: translateY(0px);
         }
 }
 

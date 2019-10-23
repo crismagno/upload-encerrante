@@ -1,18 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'font-awesome/css/font-awesome.css'
-import jquery from 'jquery'
-window.$ = jquery
-
-import VueGoogleCharts from 'vue-google-charts'
- 
-Vue.use(VueGoogleCharts)
-
+import './config/dependencies'
 import './config/msgs'
-
 import router from './config/router'
 import store from './config/store'
+import VueGoogleCharts from 'vue-google-charts'
+
+Vue.use(VueGoogleCharts)
 
 Vue.config.productionTip = false
 

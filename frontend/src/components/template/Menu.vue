@@ -1,7 +1,7 @@
 <template>
 
     <!-- <div id="menu" v-if="!isMenuVisible"> -->
-    <div class="menu d-flex flex-column" :class="isMenuVisible ? 'menuMini' : 'menuShow'" >
+    <aside id="menu" class="menu d-flex flex-column" :class="isMenuVisible ? 'menuMini' : 'menuShow'" >
         <router-link class="link" to="/dashboard" >
             <i class="fa fa-dashboard"></i>
             <span class="ml-1" v-if="!isMenuVisible" >Dashboard</span>
@@ -15,7 +15,7 @@
             <i class="fa fa-file"></i>
             <span class="ml-1" v-if="!isMenuVisible" >Encerrantes</span>
         </router-link>
-    </div>
+    </aside>
     
 </template>
 
@@ -28,9 +28,10 @@ export default {
 
 <style>
 
-.menu {
+#menu {
     grid-area: menu;
-    background-color: #29434e;
+    /* background-color: #29434e; */
+    background: linear-gradient(to left, #465964, #292e49);
 }
 
 .link{
@@ -57,16 +58,15 @@ export default {
 
 .menuMini {
     text-align: center;
-    animation: menuMini 0.5s ease;
+    animation: menuMini 1s ease;
 }
 .menuShow {
-    /* text-align: center; */
-    animation: menuShow 0.5s ease;
+    animation: menuShow 1s ease;
 }
 
 @keyframes menuMini {
 	from {
-		opacity: 0;
+		/* opacity: 0; */
 		transform: translateX(-50px);
 	} 
 	to {
@@ -76,7 +76,7 @@ export default {
 }
 @keyframes menuShow {
 	from {
-		transform: translateX(-200px);
+		transform: translateX(-100px);
 	} 
 	to {
 		transform: translateX(0px);
